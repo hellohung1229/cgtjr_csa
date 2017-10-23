@@ -1,0 +1,44 @@
+package cgtjr.academics.elctrclengnrng.cv.sfs;
+
+import javax.media.j3d.TransformGroup;
+import cgtjr.academics.math.geometry.*;
+import cgtjr.academics.math.general.plot.*;
+
+import java.util.*;
+
+
+public class IntnstSrfcSmplr extends SrfcSmplr implements BndryNodeAction_I
+{
+   private Illuminant srcIlluminant;
+   private SrfcNrmlSmplr srfcSrfcNrmlSmplr;
+   private SurfaceAlbedo smplrSurfaceAlbedo;
+
+   public IntnstSrfcSmplr(TransformGroup myTransformGroup)
+   {
+      srfcSrfcNrmlSmplr = new SrfcNrmlSmplr();
+      smplrSurfaceAlbedo = new SurfaceAlbedo();
+      srcIlluminant = new Illuminant();      
+   }
+   public void nodeOriginAction(Point aPoint,int myDepthCounter,int myDepth,int myTotalNumber)
+   {
+   }
+   public void nodeInitAction(Point aPoint,Point myPoint7,int myDepthCounter,int myDepth,int myTotalNumber)
+   {
+   }
+   public void nodeCreateAction(Point myICPnt,Point myCCPnt,Point mySCPnt,Point myNCPnt,int myDepthCounter,int myDepth,int myTotalNumber)
+   {  
+   }
+   public void nodeUpdateAction(Point aPoint,Point myPoint4,Point myPoint6,Point myPoint7,int myDepthCounter,int myDepth,int myTotalNumber)
+   {
+   }
+   public void cmptIntnsty(Point myICPnt,Point myCCPnt,Point mySCPnt,Point myNCPnt,int myDepthCounter,int myDepth,int myTotalNumber)
+   {
+      double anAlbedo = smplrSurfaceAlbedo.getAlbedo();
+      double illumination[] = srcIlluminant.getIllmntn();
+      double surfaceNormals[] = srfcSrfcNrmlSmplr.displaySrfcNrml(myICPnt,myCCPnt,mySCPnt,myNCPnt);
+      double xIntnst = anAlbedo * illumination[0] * surfaceNormals[0];
+      double yIntnst = anAlbedo * illumination[1] * surfaceNormals[1];
+      double zIntnst = anAlbedo * illumination[2] * surfaceNormals[2];
+   }
+
+}

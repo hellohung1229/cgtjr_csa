@@ -1,0 +1,53 @@
+package cgtjr.academics.elctrclengnrng.cv.sfs;
+
+import cgtjr.academics.math.geometry.*;
+import cgtjr.academics.elctrclengnrng.sgnlsstm.*;
+import cgtjr.academics.elctrclengnrng.fdm.*;
+
+import java.util.*;
+
+public class ElrLgrngEqtn
+{
+   Illuminant rMapIlluminant;
+
+   public ElrLgrngEqtn(Illuminant myRMapIlluminant)
+   {
+      rMapIlluminant = myRMapIlluminant;
+   }
+   public void displaySrfcNrml(Point myCCPnt)
+   {
+
+   }
+   public void displaySrfcNrml(Point myCCPnt)
+   {
+      checkDrctn(myCCPnt);
+      Point xPoint1 = getPosXDrctn();
+      Point xPoint2 = getNegXDrctn();
+      Point yPoint3 = getPosYDrctn();
+      Point yPoint4 = getNegYDrctn();
+
+      double aXDrvtv = computeXDrvtv(xPoint2,myCCPnt,xPoint1);
+      double aYDrvtv = computeYDrvtv(yPoint4,myCCPnt,yPoint3);
+      double aSrfcNormal[] = computeNormal(aXDrvtv,aYDrvtv);
+      
+      float aX1 = (float)(myCCPnt.getX1() + aSrfcNormal[0]/5);
+      float aY1 = (float)(myCCPnt.getY1() + aSrfcNormal[1]/5);
+      float aZ1 = (float)(myCCPnt.getZ1() + aSrfcNormal[2]/5);
+
+      Point aPoint2 = new Point(aX1,aY1,aZ1);
+      Point aPoint1 = new Point(myCCPnt.getX1(),myCCPnt.getY1(),myCCPnt.getZ1());
+      aPoint1.setColor(0xfe0000);
+      aPoint2.setColor(0xfe0000);
+      nrmlLineDraw.create2PntLine(aPoint1,aPoint2);
+   }
+   public double[] computeNormal(double myXDrvtv,double myYDrvtv)
+   {
+      double aNormal[] = new double[3];
+      double sqrtValue = Math.sqrt(1+myXDrvtv*myXDrvtv+myYDrvtv*myYDrvtv);
+      aNormal[0] = -1*myXDrvtv/sqrtValue;
+      aNormal[1] = -1*myYDrvtv/sqrtValue;
+      aNormal[2] = 1/sqrtValue;
+      
+      return aNormal;          
+   }
+}
